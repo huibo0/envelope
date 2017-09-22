@@ -23,10 +23,8 @@ class UserController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-
             $content->header('header');
             $content->description('description');
-
             $content->body($this->grid());
         });
     }
@@ -72,11 +70,16 @@ class UserController extends Controller
     protected function grid()
     {
         return Admin::grid(User::class, function (Grid $grid) {
-
             $grid->id('ID')->sortable();
-
+            $grid->column('name', '用户名');
+            $grid->column('email', '邮箱');
             $grid->created_at();
             $grid->updated_at();
+            // filter($callback)方法用来设置表格的简单搜索框
+            $grid->filter(function ($filter) {
+                // 设置created_at字段的范围查询
+                $filter->like('name', 'name');
+            });
         });
     }
 

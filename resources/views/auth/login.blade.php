@@ -1,68 +1,72 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>登陆</title>
+    <meta name="author" content="DeathGhost" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href={{\Illuminate\Support\Facades\URL::asset("css/style.css" ) }}/>
+    <style>
+        body{height:100%;background:#16a085;overflow:hidden;}
+        canvas{z-index:-1;position:absolute;}
+    </style>
+    <script src={{\Illuminate\Support\Facades\URL::asset("js/jquery.js")}}></script>
+    <script src={{\Illuminate\Support\Facades\URL::asset("js/verificationNumbers.js")}}></script>
+    <script src={{\Illuminate\Support\Facades\URL::asset("js/Particleground.js")}}></script>
+    <script>
+        $(document).ready(function() {
+            //粒子背景特效
+            $('body').particleground({
+                dotColor: '#5cbdaa',
+                lineColor: '#5cbdaa'
+            });
+            //验证码
+            createCode();
+            //测试提交，对接程序删除即可
+            $(".submit_btn").click(function(){
+                location.href="javascrpt:;"/*tpa=http://***index.html*/;
+            });
+        });
+    </script>
+</head>
+<body>
+<form class="form-horizontal" method="POST" action="{{ route('login')}}">
+    {{ csrf_field() }}
+    <dl class="admin_login">
+        <dt>
+            <strong>envelope</strong>
+            <em>欢迎登陆</em>
+        </dt>
+        <dd class="user_icon">
+            <input name="email" type="email" placeholder="账号" class="login_txtbx" value="{{ old('email') }}" required autofocus>
+        </dd>
+        @if ($errors->has('email'))
+            <span class="help-block">
+   <strong>{{ $errors->first('email') }}</strong>
+  </span>
+        @endif
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
+        <dd class="pwd_icon">
+            <input name="password" type="password" placeholder="密码" class="login_txtbx"/>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+        </dd>
+        @if ($errors->has('password'))
+            <span class="help-block">
+   <strong>{{ $errors->first('password') }}</strong>
+  </span>
+        @endif
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <dd class="val_icon">
+            <div class="checkcode">
+                <input type="text" id="J_codetext" placeholder="验证码" maxlength="4" class="login_txtbx">
+                <canvas class="J_codeimg" id="myCanvas" onclick="createCode()">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
             </div>
-        </div>
-    </div>
-</div>
-@endsection
+            <input type="button" value="验证码核验" class="ver_btn" onClick="validate();">
+        </dd>
+        <dd>
+            <input type="submit" value="立即登陆" class="submit_btn"/>
+        </dd>
+    </dl>
+</form>
+</body>
+</html>
