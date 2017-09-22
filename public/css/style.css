@@ -200,3 +200,10 @@ header .rt_nav li .quit_icon:before{content:"Q";}
 #cylindrical{width:700px;height:400px;margin-top:-15px}
 #line{width:700px;height:400px;margin-top:-15px}
 #pie{width:700px;height:400px;margin-top:-15px}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition-delay: 9999s;
+    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
+}
