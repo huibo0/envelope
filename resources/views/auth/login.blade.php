@@ -5,7 +5,7 @@
     <title>登陆</title>
     <meta name="author" content="DeathGhost" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href={{\Illuminate\Support\Facades\URL::asset("css/style.css" ) }}/>
+    <link rel="stylesheet" type="text/css" href={{\Illuminate\Support\Facades\URL::asset("css/style.css") }}/>
     <style>
         body{height:100%;background:#16a085;overflow:hidden;}
         canvas{z-index:-1;position:absolute;}
